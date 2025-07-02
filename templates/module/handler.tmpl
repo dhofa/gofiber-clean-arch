@@ -1,0 +1,74 @@
+package handler
+
+import (
+ "{{.ModuleImport}}/internal/domain"
+ "{{.ModuleImport}}/internal/entity"
+
+ "github.com/gofiber/fiber/v2"
+ "strconv"
+)
+
+type {{.PascalName}}Handler struct {
+ usecase domain.{{.PascalName}}Usecase
+}
+
+func New{{.PascalName}}Handler(u domain.{{.PascalName}}Usecase) *{{.PascalName}}Handler {
+ return &{{.PascalName}}Handler{u}
+}
+
+func (h *{{.PascalName}}Handler) Route(app fiber.Router) {
+ app.Get("/", h.GetAll)
+ app.Get("/:id", h.GetByID)
+ app.Post("/", h.Create)
+ app.Put("/:id", h.Update)
+ app.Delete("/:id", h.Delete)
+}
+
+func (h *{{.PascalName}}Handler) GetAll(c *fiber.Ctx) error {
+ list, err := h.usecase.GetAll()
+ if err != nil {
+  return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+ }
+ return c.JSON(list)
+}
+
+func (h *{{.PascalName}}Handler) GetByID(c *fiber.Ctx) error {
+ id, _ := strconv.Atoi(c.Params("id"))
+ data, err := h.usecase.GetByID(uint(id))
+ if err != nil {
+  return c.Status(404).JSON(fiber.Map{"error": "Not found"})
+ }
+ return c.JSON(data)
+}
+
+func (h *{{.PascalName}}Handler) Create(c *fiber.Ctx) error {
+ var data entity.{{.PascalName}}
+ if err := c.BodyParser(&data); err != nil {
+  return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+ }
+ if err := h.usecase.Create(&data); err != nil {
+  return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+ }
+ return c.Status(201).JSON(data)
+}
+
+func (h *{{.PascalName}}Handler) Update(c *fiber.Ctx) error {
+ id, _ := strconv.Atoi(c.Params("id"))
+ var data entity.{{.PascalName}}
+ if err := c.BodyParser(&data); err != nil {
+  return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+ }
+ data.ID = uint(id)
+ if err := h.usecase.Update(&data); err != nil {
+  return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+ }
+ return c.JSON(data)
+}
+
+func (h *{{.PascalName}}Handler) Delete(c *fiber.Ctx) error {
+ id, _ := strconv.Atoi(c.Params("id"))
+ if err := h.usecase.Delete(uint(id)); err != nil {
+  return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+ }
+ return c.SendStatus(204)
+}

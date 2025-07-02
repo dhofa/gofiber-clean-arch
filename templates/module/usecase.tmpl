@@ -1,0 +1,34 @@
+package usecase
+
+import (
+ "{{.ModuleImport}}/internal/domain"
+ "{{.ModuleImport}}/internal/entity"
+)
+
+type {{.Name}}Usecase struct {
+ repo domain.{{.PascalName}}Repository
+}
+
+func New{{.PascalName}}Usecase(r domain.{{.PascalName}}Repository) domain.{{.PascalName}}Usecase {
+ return &{{.Name}}Usecase{r}
+}
+
+func (u *{{.Name}}Usecase) GetAll() ([]entity.{{.PascalName}}, error) {
+ return u.repo.FindAll()
+}
+
+func (u *{{.Name}}Usecase) GetByID(id uint) (*entity.{{.PascalName}}, error) {
+ return u.repo.FindByID(id)
+}
+
+func (u *{{.Name}}Usecase) Create(data *entity.{{.PascalName}}) error {
+ return u.repo.Create(data)
+}
+
+func (u *{{.Name}}Usecase) Update(data *entity.{{.PascalName}}) error {
+ return u.repo.Update(data)
+}
+
+func (u *{{.Name}}Usecase) Delete(id uint) error {
+ return u.repo.Delete(id)
+}

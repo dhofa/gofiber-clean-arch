@@ -1,0 +1,19 @@
+package domain
+
+import "{{.ModuleImport}}/internal/entity"
+
+type {{.PascalName}}Repository interface {
+ FindAll() ([]entity.{{.PascalName}}, error)
+ FindByID(id uint) (*entity.{{.PascalName}}, error)
+ Create(*entity.{{.PascalName}}) error
+ Update(*entity.{{.PascalName}}) error
+ Delete(id uint) error
+}
+
+type {{.PascalName}}Usecase interface {
+ GetAll() ([]entity.{{.PascalName}}, error)
+ GetByID(id uint) (*entity.{{.PascalName}}, error)
+ Create(*entity.{{.PascalName}}) error
+ Update(*entity.{{.PascalName}}) error
+ Delete(id uint) error
+}
