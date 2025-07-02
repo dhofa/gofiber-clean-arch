@@ -10,7 +10,7 @@ type RouteRegistry struct {
 }
 
 func Setup(app *fiber.App, reg *RouteRegistry) {
-	api := app.Group("/api")
+	api := app.Group("/api/v1/")
 
 	// Modular route registration
 	reg.UserHandler.Route(api.Group("/users"))

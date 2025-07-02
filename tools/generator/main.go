@@ -36,7 +36,6 @@ func main() {
 		"../../internal/repository/" + name + "_repository.go": "../../templates/module/repository.tmpl",
 		"../../internal/usecase/" + name + "_usecase.go":       "../../templates/module/usecase.tmpl",
 		"../../internal/handler/" + name + "_handler.go":       "../../templates/module/handler.tmpl",
-		"../../infrastructure/router/" + name + "_route.go":    "../../templates/module/route.tmpl",
 	}
 
 	for outFile, tmplPath := range files {
