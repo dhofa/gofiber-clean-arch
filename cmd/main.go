@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+	app := fiber.New()
 	cfg := config.LoadConfig()
 
 	database, err := db.Connect(cfg)
@@ -23,8 +24,6 @@ func main() {
 	userRepo := repository.NewUserRepository(database)
 	userUsecase := usecase.NewUserUsecase(userRepo)
 	userHandler := handler.NewUserHandler(userUsecase)
-
-	app := fiber.New()
 
 	// Inject all handlers ke router registry
 	routes := &router.RouteRegistry{

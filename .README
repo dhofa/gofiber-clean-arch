@@ -59,9 +59,10 @@ The application will start the server and listen on port `3000`. You can access 
 - **DELETE** `/api/v1/users/:id`: Delete a user.
 
 ### CRUD Generator command
- ```bash
-   go run tools/generator/main.go model_name
-   ```
+```bash
+cd tools/generator
+go run main.go model_name
+```
 
 ### Project Structure
 
