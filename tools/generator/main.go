@@ -14,6 +14,7 @@ var moduleImport = "github.com/dhofa/gofiber-clean-arch"
 
 type TemplateData struct {
 	Name         string
+	SnakeName    string
 	PascalName   string
 	ModuleImport string
 }
@@ -25,19 +26,23 @@ func main() {
 	}
 
 	name := os.Args[1]
+	snakeName := strcase.ToSnake(name)
+	pascalName := strcase.ToCamel(name)
+
 	data := TemplateData{
 		Name:         name,
-		PascalName:   strcase.ToCamel(name),
+		SnakeName:    snakeName,
+		PascalName:   pascalName,
 		ModuleImport: moduleImport,
 	}
 
 	basePath := "../../"
 	files := map[string]string{
-		basePath + "internal/entity/" + name + ".go":                basePath + "templates/module/entity.tmpl",
-		basePath + "internal/domain/" + name + ".go":                basePath + "templates/module/domain.tmpl",
-		basePath + "internal/repository/" + name + "_repository.go": basePath + "templates/module/repository.tmpl",
-		basePath + "internal/usecase/" + name + "_usecase.go":       basePath + "templates/module/usecase.tmpl",
-		basePath + "internal/handler/" + name + "_handler.go":       basePath + "templates/module/handler.tmpl",
+		basePath + "internal/entity/" + snakeName + ".go":                basePath + "templates/module/entity.tmpl",
+		basePath + "internal/domain/" + snakeName + ".go":                basePath + "templates/module/domain.tmpl",
+		basePath + "internal/repository/" + snakeName + "_repository.go": basePath + "templates/module/repository.tmpl",
+		basePath + "internal/usecase/" + snakeName + "_usecase.go":       basePath + "templates/module/usecase.tmpl",
+		basePath + "internal/handler/" + snakeName + "_handler.go":       basePath + "templates/module/handler.tmpl",
 	}
 
 	// Generate files template
@@ -107,6 +112,9 @@ func generateFile(outputPath, templatePath string, data TemplateData) error {
 }
 
 func injectRouteToRouterFile(handlerName, routeName string) error {
+	routeName = strings.ToLower(routeName)
+	routeName = strcase.ToKebab(routeName)
+
 	basePath := "../../"
 	routerFile := basePath + "infrastructure/router/router.go"
 	injection := fmt.Sprintf("\treg.%sHandler.Route(api.Group(\"/%s\"))", strcase.ToCamel(handlerName), routeName)

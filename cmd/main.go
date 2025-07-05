@@ -13,9 +13,9 @@ import (
 
 func main() {
 	app := fiber.New()
-	cfg := config.LoadConfig()
+	dbConfig := config.LoadDatabaseConfig()
 
-	database, err := db.Connect(cfg)
+	database, err := db.Connect(dbConfig)
 	if err != nil {
 		panic(err)
 	}

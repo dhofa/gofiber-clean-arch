@@ -61,7 +61,20 @@ The application will start the server and listen on port `3000`. You can access 
 ### CRUD Generator command
 ```bash
 cd tools/generator
+```
+
+then running:
+
+```bash
 go run main.go model_name
+```
+or
+```bash
+   go run main.go modelName
+```
+or
+```bash
+   go run main.go ModelName
 ```
 
 ### Project Structure

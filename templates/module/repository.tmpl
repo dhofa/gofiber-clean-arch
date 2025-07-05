@@ -7,34 +7,34 @@ import (
  "gorm.io/gorm"
 )
 
-type {{.Name}}Repository struct {
+type {{.PascalName}}Repository struct {
  db *gorm.DB
 }
 
 func New{{.PascalName}}Repository(db *gorm.DB) domain.{{.PascalName}}Repository {
- return &{{.Name}}Repository{db}
+ return &{{.PascalName}}Repository{db}
 }
 
-func (r *{{.Name}}Repository) FindAll() ([]entity.{{.PascalName}}, error) {
+func (r *{{.PascalName}}Repository) FindAll() ([]entity.{{.PascalName}}, error) {
  var list []entity.{{.PascalName}}
  err := r.db.Find(&list).Error
  return list, err
 }
 
-func (r *{{.Name}}Repository) FindByID(id uint) (*entity.{{.PascalName}}, error) {
+func (r *{{.PascalName}}Repository) FindByID(id uint) (*entity.{{.PascalName}}, error) {
  var data entity.{{.PascalName}}
  err := r.db.First(&data, id).Error
  return &data, err
 }
 
-func (r *{{.Name}}Repository) Create(data *entity.{{.PascalName}}) error {
+func (r *{{.PascalName}}Repository) Create(data *entity.{{.PascalName}}) error {
  return r.db.Create(data).Error
 }
 
-func (r *{{.Name}}Repository) Update(data *entity.{{.PascalName}}) error {
+func (r *{{.PascalName}}Repository) Update(data *entity.{{.PascalName}}) error {
  return r.db.Save(data).Error
 }
 
-func (r *{{.Name}}Repository) Delete(id uint) error {
+func (r *{{.PascalName}}Repository) Delete(id uint) error {
  return r.db.Delete(&entity.{{.PascalName}}{}, id).Error
 }

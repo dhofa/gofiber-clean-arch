@@ -5,30 +5,30 @@ import (
 	"github.com/dhofa/gofiber-clean-arch/internal/entity"
 )
 
-type userUsecase struct {
+type UserUsecase struct {
 	repo domain.UserRepository
 }
 
 func NewUserUsecase(r domain.UserRepository) domain.UserUsecase {
-	return &userUsecase{r}
+	return &UserUsecase{r}
 }
 
-func (u *userUsecase) GetAll() ([]entity.User, error) {
+func (u *UserUsecase) GetAll() ([]entity.User, error) {
 	return u.repo.FindAll()
 }
 
-func (u *userUsecase) GetByID(id uint) (*entity.User, error) {
+func (u *UserUsecase) GetByID(id uint) (*entity.User, error) {
 	return u.repo.FindByID(id)
 }
 
-func (u *userUsecase) Create(user *entity.User) error {
+func (u *UserUsecase) Create(user *entity.User) error {
 	return u.repo.Create(user)
 }
 
-func (u *userUsecase) Update(user *entity.User) error {
+func (u *UserUsecase) Update(user *entity.User) error {
 	return u.repo.Update(user)
 }
 
-func (u *userUsecase) Delete(id uint) error {
+func (u *UserUsecase) Delete(id uint) error {
 	return u.repo.Delete(id)
 }
